@@ -1,23 +1,23 @@
 <script>
-  import Navbar from "__@components/navbars/Navbar.svelte";
+  import { page } from "$app/stores";
+
+  import "$lib/theme/styles/global.scss";
+
+  import "highlight.js/styles/hybrid.css";
+
+  import Navbar from "$lib/components/navbar.svelte";
+  import Sidebar from "$lib/components/sidebar.svelte";
+
+  // Whether to show the sidebar or not
+  $: sidebar = $page.path !== "/";
+
+  let isSideNavOpen = false;
 </script>
-<div class="flex flex-col min-h-screen">
-  <Navbar >
-    navbar
-  </Navbar>
-  <!-- page content -->
-  <div class="flex">
-    <div class="card">
-      <slot />
-    </div>
-  </div>
 
-  <!--  footer -->
-  <footer class="flex">
-    <div />
-  </footer>
-</div>
+<Navbar sidebar="{sidebar}" bind:isSideNavOpen />
 
-<style windi:preflights:global windi:safelist:global>
+{#if sidebar}
+  <Sidebar bind:isSideNavOpen />
+{/if}
 
-</style>
+<slot />
